@@ -86,8 +86,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVideoFormVisible = false">取 消</el-button>
-        <!--        <el-button :disabled="saveVideoBtnDisabled" type="primary" @click="saveOrUpdateVideo">确 定</el-button>-->
-        <el-button type="primary" @click="saveOrUpdateVideo">确 定</el-button>
+        <el-button :disabled="saveVideoBtnDisabled" type="primary" @click="saveOrUpdateVideo">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -114,7 +113,8 @@ export default {
         videoSourceId: ''
       },
       dialogChapterFormVisible: false, // 章节弹框
-      dialogVideoFormVisible: false // 小节弹框
+      dialogVideoFormVisible: false, // 小节弹框
+      saveVideoBtnDisabled: false
 
     }
   },

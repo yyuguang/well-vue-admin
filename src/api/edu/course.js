@@ -50,6 +50,32 @@ export default {
       method: 'post',
       data: courseInfo
     })
+  },
+  /**
+   * 根据课程id获取发布课程信息
+   * @param courseId
+   */
+  getPublishCourseInfo(courseId) {
+    return request({
+      url: '/eduservice/edu-course/getPublishCourseInfo',
+      method: 'get',
+      params: {
+        courseId: courseId
+      }
+    })
+  },
+  /**
+   * 发布课程
+   * @param courseId
+   */
+  publishCourse(courseId) {
+    return request({
+      url: '/eduservice/edu-course/publish',
+      method: 'post',
+      params: {
+        courseId: courseId
+      }
+    })
   }
 
 }
