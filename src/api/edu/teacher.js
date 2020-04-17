@@ -7,7 +7,12 @@
 import request from '@/utils/request'
 
 export default {
-
+  getList() {
+    return request({
+      url: '/eduservice/edu-teacher/list',
+      method: 'get'
+    })
+  },
   getTeacherListPage(pageNum, pageSize, teacherQueryVo) {
     return request({
       url: `/eduservice/edu-teacher/pageByKeys/${pageNum}/${pageSize}`,

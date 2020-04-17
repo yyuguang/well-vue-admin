@@ -76,6 +76,22 @@ export default {
         courseId: courseId
       }
     })
+  },
+  list(pageNum, pageSize, queryVo) {
+    return request({
+      url: `/eduservice/edu-course/list/${pageNum}/${pageSize}`,
+      method: 'post',
+      data: queryVo
+    })
+  },
+  delete(courseId) {
+    return request({
+      url: '/eduservice/edu-course/delete',
+      method: 'delete',
+      params: {
+        courseId: courseId
+      }
+    })
   }
 
 }
