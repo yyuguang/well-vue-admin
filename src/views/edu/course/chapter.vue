@@ -239,8 +239,10 @@ export default {
     // ==============================小节操作====================================
     // 添加小节弹框的方法
     openVideo(chapterId) {
+      debugger
       // 弹框
       this.dialogVideoFormVisible = true
+      this.fileList = []
       this.video = {}
       // 设置章节id
       this.video.chapterId = chapterId
@@ -251,10 +253,15 @@ export default {
     openEditVideo(videoId) {
       // 弹框
       this.dialogVideoFormVisible = true
+      this.video = {}
+      this.fileList = []
       // 调用接口
       video.getOneById(videoId)
         .then(response => {
           this.video = response.data.eduVideo
+          if (this.video.videoOriginalName != null && this.video.videoOriginalName !== '') {
+            this.fileList = [{ 'name': this.video.videoOriginalName }]
+          }
         })
     },
     removeVideo(id) {
