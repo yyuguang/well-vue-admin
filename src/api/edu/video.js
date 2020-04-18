@@ -38,6 +38,15 @@ export default {
         videoId: videoId
       }
     })
+  },
+  removeAliVideo(videoId) {
+    return request({
+      url: '/eduvod/video/removeAliVideo',
+      method: 'delete',
+      params: {
+        id: videoId
+      }
+    })
   }
 }
 
