@@ -155,6 +155,28 @@ export const constantRouterMap = [
       }
     ]
   },
+  {
+    path: '/member',
+    component: Layout,
+    redirect: '/member/list',
+    name: '会员管理',
+    meta: { title: '会员管理', icon: 'user' },
+    children: [
+      {
+        path: 'list',
+        name: '会员管理',
+        component: () => import('@/views/edu/member/list'),
+        meta: { title: '会员管理', icon: 'user' }
+      },
+      {
+        path: 'detail/:id',
+        name: '会员详情',
+        component: () => import('@/views/edu/member/detail'),
+        meta: { title: '会员详情', noCache: true },
+        hidden: true
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 
