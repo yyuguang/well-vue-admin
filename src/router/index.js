@@ -156,24 +156,58 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/member',
+    path: '/client',
     component: Layout,
-    redirect: '/member/list',
-    name: '会员管理',
-    meta: { title: '会员管理', icon: 'user' },
+    redirect: '/client/memberList',
+    name: 'C端数据',
+    meta: { title: 'C端数据', icon: 'echarts_line' },
     children: [
       {
-        path: 'list',
-        name: '会员管理',
+        path: 'memberList',
+        name: '会员列表',
         component: () => import('@/views/edu/member/list'),
-        meta: { title: '会员管理', icon: 'user' }
+        meta: { title: '会员列表', icon: 'user' }
       },
       {
-        path: 'detail/:id',
+        path: 'memberDetail/:id',
         name: '会员详情',
         component: () => import('@/views/edu/member/detail'),
         meta: { title: '会员详情', noCache: true },
         hidden: true
+      },
+      {
+        path: 'orderList',
+        name: '订单列表',
+        component: () => import('@/views/edu/order/list'),
+        meta: { title: '订单管理', icon: 'order' }
+      },
+      {
+        path: 'orderDetail/:id',
+        name: '订单详情',
+        component: () => import('@/views/edu/order/detail'),
+        meta: { title: '订单详情', noCache: true },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/statistics',
+    component: Layout,
+    name: '统计分析',
+    redirect: '/statistics/create',
+    meta: { title: '统计分析', icon: 'statistics' },
+    children: [
+      {
+        path: 'create',
+        name: '生成统计',
+        component: () => import('@/views/edu/statistics/create'),
+        meta: { title: '生成统计', icon: 'add-new' }
+      },
+      {
+        path: 'chart',
+        name: '统计图表',
+        component: () => import('@/views/edu/statistics/chart'),
+        meta: { title: '统计图表', icon: 'chart' }
       }
     ]
   },

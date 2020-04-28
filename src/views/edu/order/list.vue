@@ -3,9 +3,6 @@
     <!--查询表单-->
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item>
-        <el-input v-model="searchObj.mobile" placeholder="会员手机号"/>
-      </el-form-item>
-      <el-form-item label="注册时间">
         <el-date-picker
           v-model="searchObj.begin"
           type="datetime"
@@ -31,7 +28,6 @@
     <el-table
       v-loading="listLoading"
       :data="list"
-      :row-class-name="tableRowClassName"
       element-loading-text="数据加载中"
       border
       fit
@@ -44,35 +40,29 @@
           {{ (pageNum - 1) * pageSize + scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column prop="avatar" label="会员头像" align="center">
-        <!-- 图片的显示 -->
+      <el-table-column prop="orderNo" label="订单号" width="250" align="center"/>
+      <el-table-column prop="courseTitle" label="课程名称" align="center"/>
+      <el-table-column prop="totalFee" label="订单金额" width="250" align="center"/>
+      <el-table-column label="订单状态" width="200" align="center">
         <template slot-scope="scope">
-          <img :src="scope.row.avatar" width="50" height="50">
+          {{ scope.row.status===0?'未支付':'已支付' }}
         </template>
       </el-table-column>
-      <el-table-column prop="nickname" label="会员昵称" width="250" align="center"/>
-      <el-table-column label="会员状态" width="200" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.isDisabled===true?'禁用':'正常' }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="mobile" label="会员手机" width="250" align="center"/>
-      <el-table-column label="注册时间" width="250">
+      <el-table-column label="创建时间" width="250">
         <template slot-scope="scope">
           {{ scope.row.gmtCreate | formatDate }}
         </template>
       </el-table-column>
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
-          <router-link :to="'/client/memberDetail/'+scope.row.id">
+          <router-link :to="'/client/orderDetail/'+scope.row.id">
             <el-button type="primary" size="mini" icon="el-icon-message">详情</el-button>
           </router-link>
           <el-button
-            v-if="scope.row.isDisabled === false"
             type="danger"
             size="mini"
-            icon="el-icon-error"
-            @click="disableDataById(scope.row.id)">禁用
+            icon="el-icon-delete"
+            @click="deleteOrder(scope.row.id)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -88,8 +78,9 @@
     />
   </div>
 </template>
+
 <script>
-import member from '@/api/edu/member'
+import order from '@/api/edu/order'
 
 export default {
   name: 'List',
@@ -124,15 +115,10 @@ export default {
     this.getList()
   },
   methods: {
-    tableRowClassName({ row, rowIndex }) {
-      if (row.isDisabled === true) {
-        return 'warning-row'
-      }
-    },
     getList(pageNum = 1) {
       this.pageNum = pageNum
       this.listLoading = true
-      member.getMemberList(this.pageNum, this.pageSize, this.searchObj)
+      order.getOrderList(this.pageNum, this.pageSize, this.searchObj)
         .then(response => {
           if (response.success === true) {
             this.list = response.data.rows
@@ -145,18 +131,18 @@ export default {
       this.searchObj = {}
       this.getList()
     },
-    disableDataById(id) {
-      this.$confirm('此操作将禁用该会员, 是否继续?', '提示', {
+    deleteOrder(id) {
+      this.$confirm('此操作将删除该订单, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        member.disableMember(id)
+        order.deleteOrder(id)
           .then(response => {
             // 提示信息
             this.$message({
               type: 'success',
-              message: '禁用成功!'
+              message: '删除成功!'
             })
             // 回到列表页面
             this.getList()
@@ -167,8 +153,6 @@ export default {
 }
 </script>
 
-<style>
-  .el-table .warning-row {
-    background: #feeef0;
-  }
+<style scoped>
+
 </style>

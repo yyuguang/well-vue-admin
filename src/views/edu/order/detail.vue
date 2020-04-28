@@ -1,29 +1,35 @@
 <template>
   <div class="app-container">
     <el-form label-width="120px">
+      <el-form-item label="订单号">
+        <el-input :value="order.orderNo" readonly/>
+      </el-form-item>
+      <el-form-item label="课程名称">
+        <el-input :value="order.courseTitle" readonly/>
+      </el-form-item>
+      <el-form-item label="讲师名称">
+        <el-input :value="order.teacherName" readonly/>
+      </el-form-item>
       <el-form-item label="会员昵称">
-        <el-input :value="member.nickname" readonly/>
+        <el-input :value="order.nickname" readonly/>
       </el-form-item>
-      <el-form-item label="会员头像">
-        <img :src="member.avatar" width="200" height="200">
+      <el-form-item label="课程封面">
+        <img :src="order.courseCover" width="500" height="300">
       </el-form-item>
-      <el-form-item label="年龄">
-        <el-input :value="member.age" readonly/>
+      <el-form-item label="订单状态">
+        <el-input :value="order.status===0?'未支付':'已支付'" readonly/>
       </el-form-item>
-      <el-form-item label="会员状态">
-        <el-input :value="member.isDisabled===true?'禁用':'正常'" readonly/>
+      <el-form-item label="支付类型">
+        <el-input :value="order.status===1?'微信':'支付宝'" readonly/>
       </el-form-item>
-      <el-form-item label="手机号">
-        <el-input :value="member.mobile" readonly/>
+      <el-form-item label="订单金额">
+        <el-input :value="order.totalFee" readonly/>
       </el-form-item>
-      <el-form-item label="性别">
-        <el-input :value="member.sex===1?'女':'男'" readonly/>
-      </el-form-item>
-      <el-form-item label="注册时间">
-        <el-input :value="member.gmtCreate | formatDate" readonly/>
+      <el-form-item label="创建时间">
+        <el-input :value="order.gmtCreate | formatDate" readonly/>
       </el-form-item>
       <el-form-item>
-        <router-link :to="'/client/memberList'">
+        <router-link :to="'/client/orderList'">
           <el-button type="primary" style="width: 100px">返回</el-button>
         </router-link>
       </el-form-item>
@@ -33,8 +39,7 @@
 </template>
 
 <script>
-import memberApi from '@/api/edu/member'
-
+import orderApi from '@/api/edu/order'
 export default {
   name: 'Detail',
   filters: {
@@ -56,7 +61,7 @@ export default {
   },
   data() {
     return {
-      member: {}
+      order: {}
     }
   },
   created() {
@@ -73,9 +78,9 @@ export default {
       }
     },
     getInfo(id) {
-      memberApi.getMemberInfo(id)
+      orderApi.getOrderInfo(id)
         .then(response => {
-          this.member = response.data.data
+          this.order = response.data.data
         })
     }
   }

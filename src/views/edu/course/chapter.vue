@@ -239,7 +239,6 @@ export default {
     // ==============================小节操作====================================
     // 添加小节弹框的方法
     openVideo(chapterId) {
-      debugger
       // 弹框
       this.dialogVideoFormVisible = true
       this.fileList = []
@@ -329,11 +328,13 @@ export default {
     },
     // 上传视频成功调用的方法
     handleVodUploadSuccess(response, file, fileList) {
-      // 上传视频id赋值
-      this.video.videoSourceId = response.data.videoId
-      // 上传视频名称赋值
-      this.video.videoOriginalName = file.name
-      this.video.status = 'Normal'
+      if (response.success === true) {
+        // 上传视频id赋值
+        this.video.videoSourceId = response.data.videoId
+        // 上传视频名称赋值
+        this.video.videoOriginalName = file.name
+        this.video.status = 'Normal'
+      }
     },
     handleUploadExceed() {
       this.$message.warning('想要重新上传视频，请先删除已上传的视频')
