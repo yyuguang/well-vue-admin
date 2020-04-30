@@ -13,10 +13,12 @@ import store from './store'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import { hasBtnPermission } from './utils/permission' // button permission
 
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+Vue.prototype.hasPerm = hasBtnPermission
 
 new Vue({
   el: '#app',

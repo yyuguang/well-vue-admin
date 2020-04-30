@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(username, password) {
   return request({
-    url: '/eduservice/user/login',
+    url: '/admin/acl/login',
     method: 'post',
     data: {
       username,
@@ -13,15 +13,26 @@ export function login(username, password) {
 
 export function getInfo(token) {
   return request({
-    url: '/eduservice/user/info',
+    url: '/admin/acl/index/info',
     method: 'get',
     params: { token }
   })
 }
 
+/**
+ * 登出
+ */
 export function logout() {
   return request({
-    url: '/eduservice/user/logout',
+    url: '/admin/acl/index/logout',
     method: 'post'
+  })
+}
+
+// 获取菜单权限数据
+export function getMenu() {
+  return request({
+    url: '/admin/acl/index/menu',
+    method: 'get'
   })
 }
